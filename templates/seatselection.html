@@ -1,0 +1,109 @@
+<html>
+  {% load static %}
+  {% load mathfilters %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/seatselection.css' %}" />
+    <title>Seat Booking</title>
+  </head>
+  <body>
+    <header>
+      <ul>
+        <li><a href="{% url 'home' %}" style=" font: 28px caption sans-serif;"><h4 style="margin: 0px; padding: 0px; border: 0px; font: 28px caption sans-serif;">Book your show</h4></a></li>
+        <!-- add logic here conditional based display -->
+        {% if user.is_authenticated %}
+        <li style="float:right">
+          <div style="display: flex; flex-direction: row;">
+            <p style="color:aliceblue; margin-top: 13%;">Hi {{ user.user_name }}</p>
+            <a class="active" href="{% url 'logout' %}" style="margin-top: 4%;">SignOut</a>
+          </div>
+        </li>
+      {% endif %}
+      {% if not user.is_authenticated %}
+        <li style="float:right"><a class="active" href="{% url 'login' %}?next={{ request.path }}&shownum={{ showtime.shownum }}">Login</a></li>
+      {% endif %}
+      </ul>
+    </header>
+    <div class="main-block">
+      {% block content %}
+      <div class="movie-container">
+        
+        <select id="movie">
+          <option value="15">{{ movie.title }} {{ showtime.time }}</option>
+        </select>
+        
+          <ul class="showcase">
+        <li>
+          <div class="seat"></div>
+          <small>Available</small>
+        </li>
+        <li>
+          <div class="seat selected"></div>
+          <small>Selected</small>
+        </li>
+        <li>
+          <div class="seat occupied"></div>
+          <small>Occupied</small>
+        </li>
+      </ul>
+      </div>
+
+
+
+      <div class="container">
+        <div class="screen"></div>
+        <form action="" method="POST">
+          {% csrf_token %}
+          {% if error %}
+            <br><div style="border: 2px solid red; border-radius: 8px; background-color: rgba(255, 99, 71, 0.5); text-align: center;">
+              <p>You must select at least one seat!</p>
+            </div>
+          {% endif %}
+          <br>
+          {% block list %}
+          {% for seat in seats %}
+            {% if forloop.counter0|mod:7 == 0 or forloop.counter0 == 0 %}
+              <div class="row">
+                {% if seat.order is None %}
+                <label for="seat">{{seat.seatNum}}</label>
+                <input type="checkbox" id="seat" name='seat' value="{{seat.seatNum}}" class="seat">
+                {% endif %}
+                {% if seat.order is not None %}
+                <label for="seat2">{{seat.seatNum}}</label>
+                <input type="checkbox" id="seat2" name='seat' value="{{seat.seatNum}}" class="seat" disabled="disabled">
+                {% endif %}
+            {% else %}
+              {% if seat.order is None %}
+                <label for="seat3">{{seat.seatNum}}</label>
+                <input type="checkbox" id="seat3" name='seat' value="{{seat.seatNum}}" class="seat">
+                {% endif %}
+                {% if seat.order is not None %}
+                <label for="seat4">{{seat.seatNum}}</label>
+                <input type="checkbox" id="seat4" name='seat' value="{{seat.seatNum}}" class="seat" disabled="disabled">
+                {% endif %}
+            {% if forloop.counter0|div:6 == 1 or forloop.counter0|div:13 == 1 %}
+              </div>
+            {% endif %}
+            {% endif %}
+          {% endfor %}
+          {% endblock %}
+          </div>
+        </div>
+        <p class="text">
+          You have selected <span id="count">0</span> seats
+        </p>
+        <div>
+          {% with temp=show.time %}
+          <a href="{% url 'orderedit' %}?time={{temp}}">
+          {% endwith %}
+          <input type="submit"  value="Proceed to payment" class="btn"></a>
+        </div>
+
+      </form>
+      <script src="{% static 'js/seatselection.js' %}"></script>
+      {% endblock %}
+    </div>
+
+  </body>
+</html>

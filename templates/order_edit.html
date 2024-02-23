@@ -1,0 +1,127 @@
+{% load static %}
+<html>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        .card .p{margin-top: 20px;font-family: Poppins;font-weight: 500;font-size: 40px;}
+      body {
+        text-align: center;
+        padding: 40px 0;
+        background:#1c2e4aab;
+      }
+        h1 {
+          color: #1c2e4a;
+          font-family: 'Poppins', sans-serif;
+          font-weight: 900;
+          font-size: 20px;
+          margin-bottom: 10px;
+        }
+        p {
+          color: #1c2e4a;
+          font-family: 'Poppins', sans-serif;
+          font-size:20px;
+          margin: 0;
+        }
+      i {
+        color: #404F5E;
+        font-size: 100px;
+        line-height: 200px;
+        margin-left:-15px;
+      }
+      .btn {
+        background-color: #1c2e4a;
+        color: white;
+        border: none;
+        width: 30%;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 17px;
+        
+      }
+      .card {
+        background: white;
+        padding: 20px;
+        border-radius: 4px;
+        box-shadow: 0 2px 3px #C8D0D8;
+        display: inline-block;
+        margin: 0 auto;
+      }
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #1c2e4a;
+      }
+
+      li {
+        float: left;
+      }
+
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+
+      li a:hover:not(.active) {
+        background-color: #111;
+      }
+
+    </style>
+    <body>
+      <header>
+        <ul>
+          <li><a href="{% url 'home' %}" style=" font: 28px caption sans-serif;"><h4 style="margin: 0px; padding: 0px; border: 0px; font: 28px caption sans-serif;">Book your show</h4></a></li>
+          <!-- add logic here conditional based display -->
+          {% if user.is_authenticated %}
+          <li style="float:right">
+            <div style="display: flex; flex-direction: row;">
+              <p style="color:aliceblue; margin-top: 9%;">Hi {{ user.user_name }}</p>
+              <a class="active" href="{% url 'logout' %}" style="margin-top: 4%;">SignOut</a>
+            </div>
+          </li>
+          {% endif %}
+          {% if not user.is_authenticated %}
+            <li style="float:right"><a class="active" href="{% url 'login' %}?next={{ request.path }}&shownum={{ showtime.shownum }}&selectedSeats={{ selectedSeats }}">Login</a></li>
+          {% endif %}
+        </ul>
+      </header>
+    {% block content %}
+      <div class="card">
+        <h1>Select age</h1>
+        <div class="container" style="display: flex;">
+          <br><p style="font-size: 30px;font-weight: 300;margin-top: 10px;font-family:'Poppins' ;">{{movie.title}}<br>{{showtime.time}}<br></p>
+        </div>
+        <br>
+        <form method="POST">
+            {% csrf_token %}
+            {% if not user.is_authenticated %}
+                <br><div style="border: 2px solid red; border-radius: 8px; background-color: rgba(255, 99, 71, 0.5); text-align: center;">
+                <p>Please login to proceed</p>
+                </div>
+            {% endif %}
+            {% if error %}
+                <br><div style="border: 2px solid red; border-radius: 8px; background-color: rgba(255, 99, 71, 0.5); text-align: center;">
+                <p>You must select the same number of tickets as seats!</p>
+                </div>
+            {% endif %}
+            <label for="adult" style="align-items: flex-start;color:#141414;font-weight:bold;">Adults:</label>
+            <input type="number" style="background-color:white" id="adult" name="adult" value="0">
+            <label for="child" style="align-items: flex-start;color:#141414;font-weight:bold;">Children:</label>
+            <input type="number" style="background-color:white" id="child" name="child" value="0">
+            <label for="senior" style="align-items: flex-start;color:#141414;font-weight:bold;">Seniors:</label>
+            <input type="number" style="background-color:white;margin-bottom:20px;" id="senior" name="senior" value="0">
+            {% if user.is_authenticated %}
+            <input type="submit" value="Continue to Checkout" class="btn">
+            {% else %}
+            <input type="submit" value="Continue to Checkout" class ="btn" disabled>
+            {% endif %}
+
+        </form>
+      </div>
+    {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+
+	<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+
+	<title>Book your show</title>
+</head>
+<body>
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="{% url 'home' %}" class="brand">
+			<span class="text">Book your show</span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a href="{% url 'addmovie' %}">
+
+					<span class="text">Add Movies</span>
+				</a>
+			</li>
+			<li>
+				<a href="{% url 'schedule_movie' %}">
+					<span class="text">Schedule Movies</span>
+				</a>
+			</li>
+			<li>
+				<a href="{% url 'admin-promo' %}">
+					<span class="text">Add Promotions</span>
+				</a>
+			</li>
+			<li>
+				<a href="{% url 'send_promo' %}">
+					<span class="text">Send Promotions</span>
+				</a>
+			</li>
+			<li>
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a href="{% url 'logout' %}" class="logout">
+
+					<span class="text">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<section id="content">
+
+		<!-- MAIN -->
+		<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>Manage Movies</h1>
+				</div>
+			</div>
+			<div class="container">
+				<div class="forms">
+					<div class="form login">
+						<h3>Add Movies</h3></div>
+						<br>
+						
+							<div class="content">
+							  <form method="POST" action = "{% url 'addmovie' %}">
+								{% csrf_token %}
+								<div class="input-field">
+									<label for="title">Title* </label><br>
+									<input type="text" id="title" name="title" required style="width: 15%;" value="{{ request.POST.title }}">
+								</div>
+								<div class="input-field">
+									<label for="director">Director* </label> <br>
+									<input type="text" id="director" name="director" required style="width: 15%;" value="{{ request.POST.director }}">
+								</div>
+								<div class="input-field">
+									<label for="producer">Producer* </label> <br>
+									<input type="text" id="producer" name="producer" required style="width: 15%;" value="{{ request.POST.producer }}">
+								</div>
+								<div class="input-field">
+									<label for="cast">Cast* </label><br>
+									<input type="text" id="cast" name="cast" required style="width: 15%;" value="{{ request.POST.cast }}">
+								</div>
+								<div class="input-field">
+									<label for="synopsis">Synopsis* </label><br>
+									<input type="text" id="synopsis" name="synopsis" required style="width: 15%;" value="{{ request.POST.synopsis }}">
+								</div>
+								<div class="input-field">
+									<label for="rating">Rating </label><br>
+									<input type="text" id="rating" name="rating" style="width: 15%;" value="{{ request.POST.rating }}">
+								</div>
+								<div class="input-field">
+									<label for="release_date">Release date* </label><br>
+									<input type="date" id="release_date" name="release_date" required style="width: 15%;" value="{{ request.POST.release_date }}">
+								</div>
+								<div class="input-field">
+									<label for="certificate">Certificate:</label><br>
+									<select id="certificate" name="certificate" style="width: 15%;">
+										<option value="G">General audience</option>
+										<option value="M">Mature audience</option>
+										<option value="R">Restricted audience</option>
+										<option value="X">No one under 18</option>
+									</select>
+								</div>
+								<div class="input-field">
+									<label for="trailer_picture">Picture* </label><br>
+									<input type="text" id="trailer_picture" name="trailer_picture" required style="width: 15%;">
+								</div>
+								<div class="input-field">
+									<label for="trailer_video">Trailer* </label><br>
+									<input type="text" id="trailer_video" name="trailer_video" required style="width: 15%;">
+								</div>
+								<div class="input-field">
+									<label for="genre">Genre*</label><br>
+									<select id="genre" name="genre" style="width: 15%;">
+										<option value="Action">Action</option>
+										<option value="Drama">Drama</option>
+										<option value="Horror">Horror</option>
+										<option value="Rom-com">Rom-com</option>
+									</select>
+								</div>
+								<div class = "input-field">
+									<label for="duration">Duration</label><p style="font-size: 10px;">Please enter movie duration this format eg.03H00M</p>
+									<input type="text" id="duration" name="duration" value="03H00M" pattern="\d+H\d+M">
+								</div>
+								<div class="input-field">
+									<label for="playing_now">Now playing* </label>
+									<input type="checkbox" id="playing_now" name="playing_now">
+								</div>
+								<div class="input-field button">
+									<input type="submit" value="Submit" name="Submit">
+								</div>
+							  </form>
+							</div>
+						  </div>
+				</div>
+			</div>
+		</main>
+
+		<!-- MAIN -->
+	</section>
+
+
+	<script src="{% static 'js/admin.js' %}"></script>
+</body>
+</html>

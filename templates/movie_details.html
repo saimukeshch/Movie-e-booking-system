@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Movie</title>
+
+    <link rel="stylesheet" href="{% static 'css/movieselect.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-identity">
+      <h1><a href="{% url 'home' %}">Book your show</a></h1>
+    </div>
+      {% block header %}
+    <nav class="site-navigation">
+      <ul class="nav">
+        {% if not user.is_staff and user.is_authenticated %}
+            <li><a href="{% url 'user-profile' %}">Profile</a></li>
+        {% endif %}
+        {% if user.is_staff and user.is_authenticated %}
+           <li><a href="{% url 'addmovie' %}">Admin site</a></li>
+        {% endif %}
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'logout' %}">Log out</a></li>
+        {% else %}
+          <li><a href="{% url 'login' %}?next={{ request.path }}&movie={{ movie.title }}">Signup/Login</a></li>
+        {% endif %}
+        
+      </ul>
+    </nav>
+      {% endblock %}
+  </header>
+    <script>
+        $(function() {
+    $('.popup-youtube, .popup-vimeo').magnificPopup({
+        disableOn: 700,
+        type: 'iframe',
+        mainClass: 'mfp-fade',
+        removalDelay: 160,
+        preloader: false,
+        fixedContentPos: false
+    });
+});
+    </script>
+    {% block movie %}
+    <div class="container movie-details">
+        <div class="row">
+          <div class="img-box" style="width: 400px;">
+            <img src="{{ movie.trailer_picture }}"class="img-fluid" alt="" style="height: 320px; width: 300px;" />
+          </div>
+          <div class="col-md-6 left-box" >
+            <h1>{{ movie.title }}</h1>
+            <p style="font-size: 15px;"><b> Cast - </b> {{ movie.cast }}</p>
+            <p style="font-size: 15px;"><b> Director - </b> {{movie.director}}</p>
+            <p style="font-size: 15px;"><b> Producer - </b> {{movie.producer}}</p>
+            <p style="font-size: 15px;"><b> Rating - </b> {{movie.rating}}</p>
+            <p style="font-size: 15px;"><b> MPAA-US - </b>{{movie.certificate}}</p>
+            <p style="font-size: 15px;"><b> Release Date - </b> {{movie.release_date}}</p>
+            <p style="font-size: 15px;"><b> Genre - </b> {{ genre }}</p>
+            <p style="font-size: 20px;"><b>Description</b><br>
+                <i style="font-size: 17px;">{{ movie.synopsis }}</i></p>
+              <div style="max-width:75%;margin:0 auto;">
+                <a class="popup-youtube" href="{{ movie.trailer_video }}">
+                <span class="btn btn-hover iq-button">
+
+                  Watch Trailer</a>
+                </span>
+              </div>
+          </div>
+        </div>
+      </div>
+        {% endblock %}
+        {% block showtimes %}
+        <div style="margin-bottom:100px">
+          <p style="font-size: 30px;font-family:Poppin;font-weight: 500;color: white;margin-left: 30px;">Select ShowTime</p><br>
+          {% for show in showtimes %}
+            {% with temp=show.time %}
+            <a href="{% url 'seatselect' %}?shownum={{show.shownum}}" class="myButton">{{ show.time }}</a><br>
+            {% endwith %}
+          {% endfor %}
+        </div>
+        {% endblock %}
+      <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+</body>
+</html>

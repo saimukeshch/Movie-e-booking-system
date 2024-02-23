@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{% static 'css/user-profile.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        .btn-group .button {
+          background-color: #353c4e;
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          cursor: pointer;
+          float: left;
+        }
+        
+        .btn-group .button:hover {
+          background-color: #353c4e;
+        }
+
+        .disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+    <div class="left">
+        <a href="{% url 'home' %}" style="text-decoration: none;" class="navbar-brand">
+            <h1 style="color: white;">Book your show</h1><br><br>
+        </a>
+        <h2>Welcome: </h2>
+        <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+        <br>
+        <a href="{% url 'logout' %}" class="logout" style="text-decoration: none; color: #353c4e; font-size: 16px; background-color: white; padding: 15px 32px; text-align: center;">Logout</a>
+{% comment %} border-radius: 20px; padding: 5px; {% endcomment %}
+    </div>
+    <div class="right" style="overflow: auto;">
+        <div class="info">
+
+          <h2>Information</h2>
+            <br>
+            <div class="info_data">
+                <div class="btn-group data">
+                    <a href="{% url 'editprofile' %}" style="text-decoration: none;color: #FFFFFF;"/><button class="button">Edit profile</button></a>
+                </div>
+                <div class = "btn-group data">
+                    {% if accountRemain != 0 %}
+                    <a href="{% url 'add-card' %}" style="text-decoration: none;color: #FFFFFF;"/><button class="button">Add card</button></a>
+                    {% else %}
+                    <button class="button disabled">Add card</button>
+                    {% endif %}
+                    <br><br><br>
+                    <p style="margin-bottom:40px">You have {{accountRemain}} new cards remaining.</p>
+                </div>
+                <div class="btn-group data">
+                    <a href="{% url 'changepassword' %}" style="text-decoration: none;color: #FFFFFF;"/><button class="button">Change password</button></a>
+                </div>
+            </div>
+            
+           <div class="info_data">
+                <div class="data">
+                    <h2>Email</h2>
+                    <p>{{ user.email }}</p>
+                </div>
+                <div class="data">
+                   <h2>Phone</h2>
+                   {% if user.phone is not None %}
+                    <p>{{ user.phone }}</p>
+                   {% else %}
+                    <p>-</p>
+                   {% endif %}
+                </div>
+                <div class="data">
+                    <h2>Address</h2>
+                    {% if user.address %}
+                     <p>{{ user.address }}</p>
+                    {% else %}
+                     <p>-</p>
+                    {% endif %}
+                 </div>
+                <div class="data">
+                    <h2>Enroll for promotions</h2>
+                    {% if user.enrollForPromotions == True %}
+                        <p>Yes</p>
+                    {% else %}
+                        <p>No</p>
+                    {% endif %}
+                 </div>
+
+            </div>
+
+        </div>
+      <br>
+      <div class="">
+            <h2>Recent Booking</h2>
+            {% for order in orders %}
+            <div class="projects_data">
+                 <div class="data">
+                    <p>
+                    <p>{{order.shownum.movieID.title}} - {{order.shownum.time}}</p>
+                 </div>
+                 <div class="data">
+                   <h4>${{order.total}}</h4>
+                    <p>{{order.numTickets}} Tickets</p>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+        <br>
+        <div class="info_data">
+            <div class="data">
+                <h2>Saved Cards</h2>
+                {% if cards %}
+                    {% for card in cards %}
+                        <div class ="projects_data">
+                            <div class="data">
+                                <h4> Card: ************{{ card }} </h4>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class ="projects_data">
+                        <div class="data">
+                            <p> No saved cards </p>
+                        </div>
+                    </div>
+                {% endif %}
+        </div>
+    </div>
+</div>
+</body>
+</html>

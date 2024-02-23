@@ -1,0 +1,137 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+  }
+  a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    font-family: 'Poppins';
+    font-weight: 500;
+  }
+  .site-header {
+   color: rgba(0, 0, 0, 0.021);
+   backdrop-filter: blur(6px);
+    padding: .5em 1em;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .site-identity h1 {
+    font-size: 1.4em;
+    margin: .6em 0;
+    display: inline-block;
+  }
+
+
+  .site-navigation ul,
+  .site-navigation li {
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-navigation li {
+    display: inline-block;
+    margin: 1.4em 1em 1em 1em;
+  }
+  body{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 0;
+    margin: 0;
+
+    background: #141414;
+}
+ .logo {
+    width: 150px;
+    margin-top: 18px;
+  }
+  .header {
+    height: 10%;
+  }
+  .header-btn {
+    text-decoration: none !important;
+    border-radius: 30px;
+    padding: 7px 20px;
+    float: right;
+    margin-top: 15px;
+    color: #fff !important;
+    background: #107afd;
+    font-weight: 600;
+  }
+  .movie-details {
+    margin: 3% 0;
+
+  }
+  .left-box {
+    color: #fff;
+    margin: 15px 0;
+    margin-top: 100px;
+    padding: 20px;
+    color: white;
+    font-family: 'Poppins','sans-serif';
+  }
+
+  .left-box a {
+    text-decoration: none !important;
+    border-radius: 30px;
+    padding: 7px 20px;
+    margin-top: 15px;
+    color: #fff !important;
+    background: #1c2e4a;
+    font-weight: 600;
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .download-btn {
+    border: 1px solid #fff !important;
+    background: transparent !important;
+  }
+  .fa {
+    margin: 0 5px;
+  }
+  .movie-img {
+    height: 360px;
+    box-shadow: -4px 4px 5px 0;
+  }
+  .series h3 {
+    color: #fff;
+  }
+  .series img {
+    width: 100%;
+    margin-top: 15px;
+    box-shadow: -4px 4px 5px 0 #000;
+    cursor: pointer;
+  }
+  .series img .hover {
+    transform: translate(-10px);
+  }
+.myButton {
+	background-color:#1c2e4a;
+	border-radius:12px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Poppins;
+	font-size:25px;
+    margin-left: 40px;
+    margin-bottom: 20px;
+	padding:10px 31px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #1c2e4a;
+}
+.myButton:hover {
+	background-color:#1c2e4ad8;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+

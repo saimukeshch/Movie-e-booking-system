@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <title>Confirmation Page</title>
+</head>
+<body>
+
+    <style>
+.container {
+display: flex;
+align-items: center;
+justify-content: center
+}
+
+.img2 {
+		border-radius: 10%;
+}
+
+.card.container .image {
+  border-radius: 40%;
+  flex-basis: 40%;
+  width: 30%;
+  overflow: hidden;
+
+}
+
+.text {
+  font-size: 20px;
+  padding-left: 10px;
+  position: relative;
+  top: 5px;
+  color: #141414;
+}
+      body {
+        text-align: center;
+        padding: 40px 0;
+        width: 100%;
+        height: 50%;
+        background:#1c2e4a2c;
+      }
+        p {
+          color: black;
+          font-family: 'Poppins', sans-serif;
+          font-weight:700;
+          font-size:20px;
+          margin: 0;
+          position: relative;
+        }
+     
+      .card {
+        background: white;
+        padding: 100px;
+        padding-top: 20px;
+        border-radius: 4px;
+        box-shadow: 0 2px 3px #C8D0D8;
+        display: inline-block;
+        
+      }
+    </style>
+    <body>
+    {% block content %}
+      <br><br>
+      <div class="card">
+        <p>Your booking is confirmed</p>
+        <br>
+        <div class="container">
+          <div class="image">
+            <img class="img2" src="{{movie.trailer_picture}}" width="200px"; height="200px"; >
+          </div>
+          <div class="text">
+          <p>Movie:{{movie.title}}</p>
+          <p>Showtime:{{showtime.time}}<br></p><br>
+          <p>
+              Seats:
+              {% for ticket in tickets %}
+                {{ticket.seatNum}}{% if not forloop.last %},{% endif %}
+              {% endfor %}
+          </p>
+          <P>Booking Confirmation Number- {{order.orderID}}</P>
+          <p>Order Total: ${{order.total}} </p>
+          </div>
+        </div>
+            <p><a href="{% url 'home' %}"/ style="color: blue; text-decoration: underline;">Return to Home</p></a>
+      </div>
+    {% endblock %}
+    </body>
+</html>

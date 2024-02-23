@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+
+	<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+
+	<title>Book your show</title>
+</head>
+<body>
+
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="{% url 'home' %}" class="brand">
+			<span class="text">Book your show</span>
+		</a>
+		<ul class="side-menu top">
+			<li >
+				<a href="{% url 'addmovie' %}">
+
+					<span class="text">Add Movies</span>
+				</a>
+			</li>
+			<li class="active">
+				<a href="{% url 'schedule_movie' %}">
+					<span class="text">Schedule Movies</span>
+				</a>
+			</li>
+			<li>
+				<a href="{% url 'admin-promo' %}">
+					<span class="text">Add Promotions</span>
+				</a>
+			</li>
+			<li>
+				<a href="{% url 'send_promo' %}">
+					<span class="text">Send Promotions</span>
+				</a>
+			</li>
+			<li>
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a href="{% url 'logout' %}" class="logout">
+
+					<span class="text">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<section id="content">
+
+		<!-- MAIN -->
+		<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>Manage Movies</h1>
+				</div>
+			</div>
+			<div class="container">
+				<div class="forms">
+					<div class="form login">
+						<h3>Schedule Movie</h3></div>
+						{% if message %}
+						<br><div style="border: 2px solid red; border-radius: 8px; background-color: rgba(255, 99, 71, 0.5); text-align: center; width: 30%">
+							<p>{{message}}</p>
+						</div>
+						{% endif %}
+							<div class="content">
+							  <form method="POST" action = "{% url 'schedule_movie' %}">
+								{% csrf_token %}
+								<div class="input-field">
+									<label for="movieID">Movie* </label><br>
+									<select id="movieID" name="movieID" required style="width: 15%;">
+									<option value="">Select a movie</option>
+									{% for movie in movies %}
+									<option value = "{{ movie.title }}">{{ movie.title }}</option>
+									{% endfor %}
+									</select>
+								</div>
+								<div class="input-field">
+									<label for="screenID">Screen*</label><br>
+									<select id="screenID" name="screenID" style="width: 15%;">
+										<option value="">Select a screen</option>
+										<option value="A1">A1</option>
+										<option value="A2">A2</option>
+										<option value="A3">A3</option>
+										<option value="A4">A4</option>
+										<option value="A5">A5</option>
+									</select>
+								</div>
+								<div class="input-field">
+									<label for="time">Time* </label> <br>
+									<input type="datetime-local" id="time" name="time" required style="max-width: 15%;">
+								</div>
+								<div class="input-field button">
+									<input type="submit" value="Submit" name="Submit">
+								</div>
+							  </form>
+							</div>
+						  </div>
+				</div>
+			</div>
+		</main>
+
+		<!-- MAIN -->
+	</section>
+
+
+	<script src="{% static 'js/admin.js' %}"></script>
+</body>
+</html>

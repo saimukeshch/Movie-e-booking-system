@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+
+	<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+
+	<title>Book your show</title>
+</head>
+<body>
+
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="{% url 'home' %}" class="brand">
+			<span class="text">Book Your Show</span>
+		</a>
+		<ul class="side-menu top">
+			<li >
+				<a href="{% url 'addmovie' %}">
+
+					<span class="text">Add Movies</span>
+				</a>
+			</li>
+			<li >
+				<a href="{% url 'schedule_movie' %}">
+					<span class="text">Schedule Movies</span>
+				</a>
+			</li>
+			<li class="active">
+				<a href="{% url 'admin-promo' %}">
+					<span class="text">Add Promotions</span>
+				</a>
+			</li>
+			<li>
+				<a href="{% url 'send_promo' %}">
+					<span class="text">Send Promotions</span>
+				</a>
+			</li>
+			<li>
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a href="{% url 'logout' %}" class="logout">
+
+					<span class="text">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<section id="content">
+
+
+		<!-- MAIN -->
+		<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>Manage Promotions</h1>
+				</div>
+			</div>
+			<div class="table-data">
+				<div class="order">
+					<div class="head">
+						{% load crispy_forms_tags %}
+    					{% block addpromo %}
+						<h3>Add Promotion</h3></div>
+							<div class="content">
+							  <form action="#", method="POST">
+								{% csrf_token %}
+								<div class="user-details">
+								  <div class="input-box">
+									{{ form.amount|as_crispy_field }}
+								  </div>
+								  <div class="input-box">
+									{{ form.valid|as_crispy_field }}
+								  </div>
+								</div>
+								<div class="button">
+								  <input type="submit" value="Submit">
+								</div>
+							  </form>
+							</div>
+						  </div>
+						{% endblock %}
+				</div>
+
+			</div>
+
+			</div>
+
+		</main>
+
+		<!-- MAIN -->
+	</section>
+
+
+	<script src="{% static 'js/admin.js' %}"></script>
+</body>
+</html>

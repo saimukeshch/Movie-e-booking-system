@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New User Registration</title>
+</head>
+<body>
+    <div class="container">
+        <div class="forms">
+            <div class="form login">
+                <span class="title">Register</span>
+                    <form method="POST" action="{% url 'registration' %}">
+                        {% csrf_token %}
+                        {% if messages %}
+                            <ul class="messages">
+                            {% for message in messages %}
+                            <br><div style="border: 2px solid red; border-radius: 8px; background-color: rgba(255, 99, 71, 0.5); text-align: center;">
+                                <p>{{ message }}</p>
+                            </div>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                        <div class="input-field">
+                            <label for="user_name">User name* </label> <br>
+                            <input type="text" id="user_name" name="user_name" required style="max-width: 100%;" value="{{ request.POST.user_name }}">
+                        </div>
+                        <div class="input-field">
+                            <label for="first_name">First name* </label> <br>
+                            <input type="text" id="first_name" name="first_name" required style="max-width: 100%;" value="{{ request.POST.first_name }}">
+                        </div>
+                        <div class="input-field">
+                            <label for="last_name">Last name* </label> <br>
+                            <input type="text" id="last_name" name="last_name" required style="max-width: 100%;" value="{{ request.POST.last_name }}">
+                        </div>
+                        <div class="input-field">
+                            <label for="email">Email* </label> <br>
+                            <input type="text" id="email" name="email" required style="max-width: 100%;" value="{{ request.POST.email }}">
+                        </div>
+                        <div class="input-field">
+                            <label for="phone">Phone </label> <br>
+                            <input type="text" id="phone" name="phone" style="max-width: 100%;" pattern="^\W?(\d{3})\W?\W?(\d{3})\W?(\d{4})$" value="{{ request.POST.phone }}">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="password1">Password* </label> <br>
+                            <input type="password" id="password1" name="password1" required style="max-width: 100%;"> 
+                        </div>
+                        <div class="input-field">
+                            <label for="password2">Confirm password* </label> <br>
+                            <input type="password" id="password2" style="max-width: 100%;" name="password2" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="Address">Address </label> <br>
+                            <input type="text" id="address" name="address" style="max-width: 100%;" value="{{ request.POST.address }}">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="enrollForPromotions">Promotions </label>
+                            <input type="checkbox" id="enrollForPromotions" name="enrollForPromotions" style="max-width: 100%;">
+                        </div>
+                    
+                        <div class="input-field button">
+                            <input type="submit" value="Register" name="Register">
+                        </div>
+                    </form>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+            <div style="text-align: center;">
+                Already have an account?<a href="{% url 'home' %}"> Login</a>
+            </div>
+            <div style="text-align: center;">
+                <a href="{% url 'home' %}"> Return to Home</a>
+            </div>
+            <br>
+            <br>
+        </div>
+</body>
+</html>

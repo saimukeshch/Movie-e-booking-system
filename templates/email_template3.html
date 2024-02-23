@@ -1,0 +1,11 @@
+Hey {{name}},
+
+Thank you for your order of tickets for {{movie.title}}.
+Tickets: {{order.numTickets}}.
+Seats: {% for ticket in tickets %} {{ticket.seatNum}}{% if not forloop.last %},{% endif %} {% endfor %}.
+Total amount paid ${{order.total}}.
+Your showtime is {{showtime.time}} and your order confirmation number is {{order.orderID}}
+
+Thank you for shopping with us and enjoy your show!
+
+From C9

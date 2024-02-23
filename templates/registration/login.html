@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New User Registration</title>
+</head>
+<body>
+    {% load crispy_forms_tags %}
+    {%block content %}
+    <div class="container">
+        <div class="forms">
+            <div class="form login">
+                <span class="title">Login</span>
+                {% if next == '/booking' %}
+                <form method="post" class="form-group" action="{% url 'login' %}?next={{ next }}&movie={{ movie }}">
+                {% elif next == '/seatselect' %}
+                <form method="post" class="form-group" action="{% url 'login' %}?next={{ next }}&shownum={{ shownum }}">
+                {% elif next == '/orderedit' %}
+                <form method="post" class="form-group" action="{% url 'login' %}?next={{ next }}&shownum={{ shownum }}&selectedSeats={{ selectedSeats }}">
+                {% else %}
+                <form method="post" class="form-group" action="{% url 'login' %}">
+                {% endif %}
+                {% csrf_token %}
+                {% if error %}
+                    <br><div style="border: 2px solid red; border-radius: 8px; background-color: rgba(255, 99, 71, 0.5); text-align: center;">
+                        <p>Could not find matching account!</p>
+                    </div>
+                {% endif %}
+                <div class="input-field">
+                    <label for="user_name">User name* </label> <br>
+                    <input type="text" id="user_name" name="user_name" required style="max-width: 100%;">
+                </div>
+                <div class="input-field">
+                    <label for="password">Password* </label> <br>
+                    <input type="password" id="password" name="password" required style="max-width: 100%;"> 
+                </div>
+                <div class="input-field button">
+                    <input type="submit" value="Login" name="login">
+                </div>
+                </form>
+                <div class="login-signup">
+                    <span class="text">Don't have an account?
+                        <a href="{% url 'registration' %}">Create</a>
+                    </span><br>
+                    <span class="text">Forgot password?
+                        <a href="{% url 'resetpassword' %}">Reset</a>
+                    </span>
+                </div>
+                <div style="text-align: center;">
+                    <a href="{% url 'home' %}"> Return to Home</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
